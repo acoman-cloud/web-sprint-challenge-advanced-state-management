@@ -1,12 +1,57 @@
-
+import { LOAD_START, LOAD_SUCCESS, LOAD_FAIL, ADD_SMURF, SET_ERROR } from './../actions'
 export const initialState = {
+	smurfs:[{
+		id:'',
+		name: '',
+		nickname:'',
+		position:'',
+		description:'',
+	}],
+	isLoading:false,
+	errors:'',
 }
 
-const reducer = ()=>{
+const reducer = (state = initialState, action)=>{
+	switch(action.type){
+		case LOAD_START:
+			return({
+				...state,
+				smurfs:[],
+				isLoading:true,
+				errors:'',
+			})
+			case LOAD_SUCCESS:
+				return({
+					...state,
+					smurfs:action.payload,
+					isLoading:false,
+					errors:'',
+			})
+			case LOAD_FAIL:
+				return({
+					...state,
+					smurfs:[],
+					isLoading:false,
+					errors:action.payload,
+			})
+			case ADD_SMURF:
+				return({
+					...state,
+					smurfs:action.payload,
+					isLoading:false,
+					errors:'',
+				})
+			case SET_ERROR:
+				return({
+					...state,
+					errors:action.payload,
+			})
+			default:
+				return state;
+	}
 }
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
-export default reducer;
 
 //Task List:
 //1. Adds the following state values into the initialState:
@@ -20,3 +65,4 @@ export default reducer;
 //5. Add in a reducer cases to accomidate the failed smurf api fetch.
 //6. Add in a reducer case to accomidate adding a smurf (including the name, nickname, position, summary and an internally generated id) into your smurf list.
 //7. Add in a reducer case that adds in a value to the error message.
+export default reducer;

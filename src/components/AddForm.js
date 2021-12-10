@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchSmurfs, addSmurf, setError } from './../actions';
 
 const AddForm = (props) => {
+    const { smurfs, isLoading, errors } = props;
     const [state, setState] = useState({
         name:"",
         position:"",
@@ -9,7 +12,6 @@ const AddForm = (props) => {
     });
 
     //remove when error state is added
-    const errorMessage = "";
 
     const handleChange = e => {
         setState({
@@ -22,10 +24,13 @@ const AddForm = (props) => {
         e.preventDefault();
         if (state.name === "" || state.position === "" || state.nickname === "") {
             //dispatch a custom error action
+            props.setError('Name, position, and nickname are required fields.');
         } else {
             //dispatch an addSmurf action
+            props.addSmurf(state.name,state.position, state.nickname, state.description);
         }
     }
+
 
     return(<section>
         <h2>Add Smurf</h2>
@@ -47,14 +52,25 @@ const AddForm = (props) => {
                 <textarea onChange={handleChange} value={state.description} name="description" id="description" />
             </div>
             {
-                errorMessage && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {errorMessage}</div>
+                errors && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {errors}</div>
             }
             <button>Submit Smurf</button>
         </form>
     </section>);
 }
-
-export default AddForm;
+const mapStateToProps = state => {
+  return {
+    smurfs: state.smurfs,
+    isLoading: state.isLoading,
+    errors: state.errors,
+  };
+};
+const mapActionsToState={
+  fetchSmurfs: fetchSmurfs,
+  addSmurf: addSmurf,
+  setError:setError,
+}
+export default connect(mapStateToProps, mapActionsToState)(AddForm);
 
 //Task List:
 //1. Connect the errorMessage, setError and addSmurf actions to the AddForm component.
