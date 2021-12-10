@@ -52,6 +52,7 @@ const reducer = (state = initialState, action)=>{
 }
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
+export default reducer;
 
 //Task List:
 //1. Adds the following state values into the initialState:
@@ -65,4 +66,3 @@ const reducer = (state = initialState, action)=>{
 //5. Add in a reducer cases to accomidate the failed smurf api fetch.
 //6. Add in a reducer case to accomidate adding a smurf (including the name, nickname, position, summary and an internally generated id) into your smurf list.
 //7. Add in a reducer case that adds in a value to the error message.
-export default reducer;
