@@ -25,7 +25,6 @@ export const addSmurf=(nam, pos, nick, des)=>{
 	return(dispatch)=>{
 		//dispatch({type:LOAD_START});
 		axios.post('http://localhost:3333/smurfs', {
-			id:Date.now(),
 			name: nam,
 			nickname:nick,
 			position:pos,
